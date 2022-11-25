@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./styles.css";
+import Header from "./components/Header/Header.js";
+import TodoList from "./components/TodoList/TodoList.js";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	let [todos, setTodos] = useState([]);
+
+	const addTodo = (todo) => {
+		todos.unshift(todo);
+		setTodos(todos);
+		setTodos([...todos]);
+	};
+	const removeTodo = (todo) => {
+		setTodos(todos.filter((el) => todo.id !== el.id));
+	};
+	const editTodo = (todo) => {
+		console.log(todo)
+	};
+	return (
+		<div className="App">
+			<Header />
+			<TodoList
+				addTodo={addTodo}
+				removeTodo={removeTodo}
+				editTodo={editTodo}
+				todos={todos}
+			/>
+		</div>
+	);
 }
 
 export default App;
