@@ -2,6 +2,7 @@ import { useState } from "react";
 
 function TaskNameWithCheckbox(props) {
 	const [checked, setChecked] = useState(props.todo.checked);
+
 	return (
 		<div className="task-name-with-checkbox">
 			<input

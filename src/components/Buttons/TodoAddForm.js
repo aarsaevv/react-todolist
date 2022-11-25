@@ -2,10 +2,10 @@ import { useState } from "react";
 
 function TodoAddForm(props) {
 	const [title, setTitle] = useState("");
+
 	const handleInput = (event) => {
 		setTitle(event.target.value);
 	};
-
 	const addTodo = (event) => {
 		if (title) {
 			props.addTodo({
@@ -15,21 +15,16 @@ function TodoAddForm(props) {
 				hasImageEmbedded: false,
 			});
 			setTitle("");
-		} else {
-			alert("Поле не может быть пустым!");
 		}
 	};
-
 	const handleClick = (event) => {
 		addTodo();
 	};
-
 	const handleKeypress = (event) => {
 		if (event.keyCode === 13) {
 			addTodo();
 		}
 	};
-
 	return (
 		<div className="todo-add-form">
 			<input

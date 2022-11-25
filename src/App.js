@@ -7,7 +7,7 @@ function App() {
 	let [todos, setTodos] = useState([]);
 
 	const addTodo = (todo) => {
-		todos.unshift(todo);
+		todos.push(todo);
 		setTodos(todos);
 		setTodos([...todos]);
 	};
@@ -15,7 +15,14 @@ function App() {
 		setTodos(todos.filter((el) => todo.id !== el.id));
 	};
 	const editTodo = (todo) => {
-		console.log(todo)
+		todos = todos.map((item, index) => {
+			if (item.title !== todo.title && index + 1 === todo.id) {
+				item.title = todo.title;
+				return item;
+			}
+			return item;
+		});
+		setTodos(todos);
 	};
 	return (
 		<div className="App">
