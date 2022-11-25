@@ -2,27 +2,35 @@ import { useState } from "react";
 
 function TodoAddForm(props) {
 	const [title, setTitle] = useState("");
+	const [message, setMessage] = useState("");
 
-	const handleInput = (event) => {
+	const handleInputTitle = (event) => {
 		setTitle(event.target.value);
 	};
-	const addTodo = (event) => {
+	const handleInputDescription = (event) => {
+		setMessage(event.target.value);
+	};
+	const addTodoTitle = (event) => {
 		if (title) {
-			props.addTodo({
+			props.addTodoTitle({
 				id: props.todos.length + 1,
 				title,
+				message,
 				timestamp: 0,
 				hasImageEmbedded: false,
 			});
 			setTitle("");
 		}
+		if (message) {
+			setMessage("");
+		}
 	};
 	const handleClick = (event) => {
-		addTodo();
+		addTodoTitle();
 	};
 	const handleKeypress = (event) => {
 		if (event.keyCode === 13) {
-			addTodo();
+			addTodoTitle();
 		}
 	};
 	return (
@@ -30,11 +38,20 @@ function TodoAddForm(props) {
 			<input
 				type="text"
 				id={props.id}
-				onChange={handleInput}
+				onChange={handleInputTitle}
 				className="add-text"
 				value={title}
 				onKeyDown={handleKeypress}
-				placeholder="Введите текст задачи"
+				placeholder="Введите название задачи"
+			/>
+			<input
+				type="text"
+				id={props.id}
+				onChange={handleInputDescription}
+				className="add-text"
+				value={message}
+				onKeyDown={handleKeypress}
+				placeholder="Введите описание задачи"
 			/>
 			<button
 				onClick={handleClick}

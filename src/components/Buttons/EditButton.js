@@ -2,26 +2,50 @@ import { useState } from "react";
 
 function EditButton(props) {
 	const [isEditing, setIsEditing] = useState(false);
-	const [todo, setTodo] = useState({});
+	const [todoTitle, setTodoTitle] = useState({});
+	const [todoDescription, setTodoDescription] = useState({});
 
-	const handleEditInputChange = (event) => {
-		setTodo({ ...todo, title: event.target.value, id: props.todo.id });
+	const handleEditTitleInputChange = (event) => {
+		setTodoTitle({
+			...todoTitle,
+			title: event.target.value,
+			id: props.todo.id,
+		});
 	};
+
+	const handleEditDescriptionInputChange = (event) => {
+		setTodoDescription({
+			...todoDescription,
+			message: event.target.value,
+			id: props.todo.id,
+		});
+	};
+
 	const saveTodo = (event) => {
 		if (isEditing) {
-			props.editTodo(todo);
+			props.editTodoDescription(todoDescription);
+			props.editTodoTitle(todoTitle);
 		}
 	};
 	return (
 		<div className="edit-button">
 			{isEditing && (
-				<input
-					type="text"
-					value={todo.value}
-					defaultValue={props.todo.title}
-					className="edit-text"
-					onChange={handleEditInputChange}
-				/>
+				<div>
+					<input
+						type="text"
+						value={todoTitle.value}
+						defaultValue={props.todo.title}
+						className="edit-text"
+						onChange={handleEditTitleInputChange}
+					/>
+					<input
+						type="text"
+						value={todoDescription.value}
+						defaultValue={props.todo.message}
+						className="edit-text"
+						onChange={handleEditDescriptionInputChange}
+					/>
+				</div>
 			)}
 			<button
 				onClick={() => {

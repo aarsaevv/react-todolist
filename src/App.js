@@ -6,7 +6,7 @@ import TodoList from "./components/TodoList/TodoList.js";
 function App() {
 	let [todos, setTodos] = useState([]);
 
-	const addTodo = (todo) => {
+	const addTodoTitle = (todo) => {
 		todos.push(todo);
 		setTodos(todos);
 		setTodos([...todos]);
@@ -14,10 +14,20 @@ function App() {
 	const removeTodo = (todo) => {
 		setTodos(todos.filter((el) => todo.id !== el.id));
 	};
-	const editTodo = (todo) => {
+	const editTodoTitle = (todo) => {
 		todos = todos.map((item, index) => {
 			if (item.title !== todo.title && index + 1 === todo.id) {
 				item.title = todo.title;
+				return item;
+			}
+			return item;
+		});
+		setTodos(todos);
+	};
+	const editTodoDescription = (todo) => {
+		todos = todos.map((item, index) => {
+			if (item.message !== todo.message && index + 1 === todo.id) {
+				item.message = todo.message;
 				return item;
 			}
 			return item;
@@ -28,9 +38,10 @@ function App() {
 		<div className="App">
 			<Header />
 			<TodoList
-				addTodo={addTodo}
+				addTodoTitle={addTodoTitle}
 				removeTodo={removeTodo}
-				editTodo={editTodo}
+				editTodoTitle={editTodoTitle}
+				editTodoDescription={editTodoDescription}
 				todos={todos}
 			/>
 		</div>

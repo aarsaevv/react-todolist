@@ -22,7 +22,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  width: 540px;
+  width: 900px;
   text-align: center;
   background-color: #fff;
   border: 2px solid #d3d3d3;
@@ -30,12 +30,14 @@ body {
 }
 .todo-list .todo-add-form {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  align-items: center;
   gap: 4px;
   margin: 5px 0 5px;
 }
 .todo-list .todo-add-form .add-button {
   font-size: 20px;
+  width: 40px;
 }
 .todo-list .todo-add-form .add-text {
   font-size: 20px;
@@ -44,7 +46,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 480px;
+  width: 810px;
   height: 60px;
   margin: 4px 0 4px;
   padding: 0 0 0 8px;
