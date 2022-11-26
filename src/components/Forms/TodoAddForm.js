@@ -1,9 +1,10 @@
 import { useState } from "react";
-import EmbeddedFiles from "./EmbeddedFiles.js";
 
 function TodoAddForm(props) {
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
+	const {choosedFile, setChoosedFile} = useState("");
+	const [timestamp, setTimestamp] = useState("");
 
 	const handleInputTitle = (event) => {
 		setTitle(event.target.value);
@@ -11,14 +12,18 @@ function TodoAddForm(props) {
 	const handleInputDescription = (event) => {
 		setDescription(event.target.value);
 	};
-	const addTodoTitle = (event) => {
+	const handleInputDate = (event) => {
+		let timestamp = ((new Date(event.target.value)).getTime() / 100);
+		setTimestamp(timestamp);
+	};
+	const addTodo = (event) => {
 		if (title) {
-			props.addTodoTitle({
+			props.addTodo({
 				id: props.todos.length + 1,
 				title,
 				description,
 				checked: false,
-				timestamp: 0,
+				timestamp,
 				imageSrc:
 					"https://www.html.am/images/samples/remarkables_queenstown_new_zealand-300x225.jpg",
 			});
@@ -29,11 +34,11 @@ function TodoAddForm(props) {
 		}
 	};
 	const handleClick = (event) => {
-		addTodoTitle();
+		addTodo();
 	};
 	const handleKeypress = (event) => {
 		if (event.keyCode === 13) {
-			addTodoTitle();
+			addTodo();
 		}
 	};
 	return (
@@ -56,9 +61,12 @@ function TodoAddForm(props) {
 				onKeyDown={handleKeypress}
 				placeholder="Введите описание задачи"
 			/>
-			<span>Введите время завершения задачи</span>
-			<input type="datetime-local" />
-			<EmbeddedFiles />
+			<input type="file" />
+			<input
+				type="datetime-local"
+				id="todo-deadline"
+				onChange={handleInputDate}
+			/>
 			<button
 				onClick={handleClick}
 				className="add-button">

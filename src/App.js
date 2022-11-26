@@ -6,7 +6,7 @@ import TodoList from "./components/TodoList/TodoList.js";
 function App() {
 	let [todos, setTodos] = useState([]);
 
-	const addTodoTitle = (todo) => {
+	const addTodo = (todo) => {
 		todos.push(todo);
 		setTodos(todos);
 		setTodos([...todos]);
@@ -44,11 +44,12 @@ function App() {
 		});
 		setTodos(todos);
 	};
+
 	return (
 		<div className="App">
 			<Header />
 			<TodoList
-				addTodoTitle={addTodoTitle}
+				addTodo={addTodo}
 				toggleChecked={toggleChecked}
 				removeTodo={removeTodo}
 				editTodoTitle={editTodoTitle}
