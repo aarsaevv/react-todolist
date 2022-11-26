@@ -36,7 +36,7 @@ function App() {
 
 	const loadTodosFromDatabase = async (todo) => {
 		const querySnapshot = await getDocs(collection(db, "todos"));
-		console.log(querySnapshot);
+		console.log(querySnapshot.docs[0].id); // Пригодится
 		// fetch(
 		// 	"https://firestore.googleapis.com/v1/projects/react-todolist-bc761/databases/(default)/documents/todos"
 		// )
@@ -60,12 +60,10 @@ function App() {
 		await addDoc(collection(db, "todos"), todo);
 		loadTodosFromDatabase();
 	};
-
 	const removeTodo = async (todo) => {
 		await deleteDoc(doc(db, "todos", todo.id));
 		loadTodosFromDatabase();
 	};
-
 	const editTodoTitle = (todo) => {
 		todos = todos.map((item, index) => {
 			if (item.title !== todo.title && index + 1 === todo.id) {
@@ -76,7 +74,6 @@ function App() {
 		});
 		setTodos(todos);
 	};
-
 	const editTodoDescription = (todo) => {
 		todos = todos.map((item, index) => {
 			if (item.description !== todo.description && index + 1 === todo.id) {
@@ -87,7 +84,6 @@ function App() {
 		});
 		setTodos(todos);
 	};
-
 	const toggleChecked = (todo) => {
 		todos = todos.map((item, index) => {
 			if (item.checked === todo.checked && index + 1 === todo.id) {
@@ -98,7 +94,6 @@ function App() {
 		});
 		setTodos(todos);
 	};
-
 	return (
 		<div className="App">
 			<Header />
