@@ -3,7 +3,6 @@ import { useState } from "react";
 function TodoAddForm(props) {
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
-	const {choosedFile, setChoosedFile} = useState("");
 	const [timestamp, setTimestamp] = useState("");
 
 	const handleInputTitle = (event) => {
@@ -13,7 +12,7 @@ function TodoAddForm(props) {
 		setDescription(event.target.value);
 	};
 	const handleInputDate = (event) => {
-		let timestamp = ((new Date(event.target.value)).getTime() / 100);
+		let timestamp = new Date(event.target.value).getTime() / 100;
 		setTimestamp(timestamp);
 	};
 	const addTodo = (event) => {

@@ -44,7 +44,6 @@ function App() {
 		});
 		setTodos(todos);
 	};
-
 	return (
 		<div className="App">
 			<Header />
