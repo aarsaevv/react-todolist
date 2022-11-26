@@ -11,9 +11,9 @@ function TodoAddForm(props) {
 	const handleInputDescription = (event) => {
 		setDescription(event.target.value);
 	};
-	const addTodoTitle = (event) => {
+	const addTodo = (event) => {
 		if (title) {
-			props.addTodoTitle({
+			props.addTodo({
 				id: props.todos.length + 1,
 				title,
 				description,
@@ -29,11 +29,11 @@ function TodoAddForm(props) {
 		}
 	};
 	const handleClick = (event) => {
-		addTodoTitle();
+		addTodo();
 	};
 	const handleKeypress = (event) => {
 		if (event.keyCode === 13) {
-			addTodoTitle();
+			addTodo();
 		}
 	};
 	return (

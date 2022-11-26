@@ -5,7 +5,7 @@ function TodoList(props) {
 	return (
 		<div className="todo-list">
 			<TodoAddForm
-				addTodoTitle={props.addTodoTitle}
+				addTodo={props.addTodo}
 				todos={props.todos}
 			/>
 			{props.todos.length > 0 &&
