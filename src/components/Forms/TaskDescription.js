@@ -1,9 +1,9 @@
-// import { useState } from "react";
-
 function TaskDescription(props) {
 	return (
 		<div className="task-description">
-			<span className="">{props.todo.message}</span>
+			<span className={`${props.todo.checked ? "checked" : ""}`}>
+				{props.todo.description}
+			</span>
 		</div>
 	);
 }

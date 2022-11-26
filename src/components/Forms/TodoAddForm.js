@@ -1,28 +1,31 @@
 import { useState } from "react";
+import EmbeddedFiles from "./EmbeddedFiles.js";
 
 function TodoAddForm(props) {
 	const [title, setTitle] = useState("");
-	const [message, setMessage] = useState("");
+	const [description, setDescription] = useState("");
 
 	const handleInputTitle = (event) => {
 		setTitle(event.target.value);
 	};
 	const handleInputDescription = (event) => {
-		setMessage(event.target.value);
+		setDescription(event.target.value);
 	};
 	const addTodoTitle = (event) => {
 		if (title) {
 			props.addTodoTitle({
 				id: props.todos.length + 1,
 				title,
-				message,
+				description,
+				checked: false,
 				timestamp: 0,
-				hasImageEmbedded: false,
+				imageSrc:
+					"https://www.html.am/images/samples/remarkables_queenstown_new_zealand-300x225.jpg",
 			});
 			setTitle("");
 		}
-		if (message) {
-			setMessage("");
+		if (description) {
+			setDescription("");
 		}
 	};
 	const handleClick = (event) => {
@@ -49,14 +52,17 @@ function TodoAddForm(props) {
 				id={props.id}
 				onChange={handleInputDescription}
 				className="add-text"
-				value={message}
+				value={description}
 				onKeyDown={handleKeypress}
 				placeholder="Введите описание задачи"
 			/>
+			<span>Введите время завершения задачи</span>
+			<input type="datetime-local" />
+			<EmbeddedFiles />
 			<button
 				onClick={handleClick}
 				className="add-button">
-				+
+				Добавить задачу
 			</button>
 		</div>
 	);

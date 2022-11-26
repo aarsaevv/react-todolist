@@ -1,9 +1,5 @@
 function Header() {
-  return (
-      <header className="app-header">
-        Todo-list
-      </header>
-  );
+	return <header className="app-header">Todo-list</header>;
 }
 
 export default Header;

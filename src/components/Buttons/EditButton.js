@@ -12,15 +12,13 @@ function EditButton(props) {
 			id: props.todo.id,
 		});
 	};
-
 	const handleEditDescriptionInputChange = (event) => {
 		setTodoDescription({
 			...todoDescription,
-			message: event.target.value,
+			description: event.target.value,
 			id: props.todo.id,
 		});
 	};
-
 	const saveTodo = (event) => {
 		if (isEditing) {
 			props.editTodoDescription(todoDescription);
@@ -41,10 +39,11 @@ function EditButton(props) {
 					<input
 						type="text"
 						value={todoDescription.value}
-						defaultValue={props.todo.message}
+						defaultValue={props.todo.description}
 						className="edit-text"
 						onChange={handleEditDescriptionInputChange}
 					/>
+					<input type="file" />
 				</div>
 			)}
 			<button

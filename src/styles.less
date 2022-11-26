@@ -3,8 +3,9 @@
     border-radius: 12px;
 }
 
-.striked {
+.checked {
     text-decoration: line-through;
+    opacity: .4;
 }
 
 body {
@@ -39,8 +40,8 @@ body {
         margin: 5px 0 5px;
 
         .add-button {
-            font-size: 20px;
-            width: 40px;
+            font-size: 16px;
+            width: auto;
         }
 
         .add-text {
@@ -53,22 +54,27 @@ body {
         align-items: center;
         justify-content: space-between;
         width: 810px;
-        height: 60px;
+        height: 90px;
         margin: 4px 0 4px;
         padding: 0 0 0 8px;
         .bordered();
 
-        .task-name-with-checkbox {
+        .task-title-with-checkbox {
             display: flex;
             flex-direction: row;
             align-items: center;
-            gap: 16px;
+            gap: 10px;
             font-size: 20px;
 
             .checkbox {
                 width: 18px;
                 height: 18px;
             }
+        }
+
+        .embedded-image {
+            position: relative;
+            height: 100%;
         }
 
         .item-buttons {

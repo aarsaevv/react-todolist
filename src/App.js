@@ -26,8 +26,18 @@ function App() {
 	};
 	const editTodoDescription = (todo) => {
 		todos = todos.map((item, index) => {
-			if (item.message !== todo.message && index + 1 === todo.id) {
-				item.message = todo.message;
+			if (item.description !== todo.description && index + 1 === todo.id) {
+				item.description = todo.description;
+				return item;
+			}
+			return item;
+		});
+		setTodos(todos);
+	};
+	const toggleChecked = (todo) => {
+		todos = todos.map((item, index) => {
+			if (item.checked === todo.checked && index + 1 === todo.id) {
+				item.checked = !todo.checked;
 				return item;
 			}
 			return item;
@@ -39,6 +49,7 @@ function App() {
 			<Header />
 			<TodoList
 				addTodoTitle={addTodoTitle}
+				toggleChecked={toggleChecked}
 				removeTodo={removeTodo}
 				editTodoTitle={editTodoTitle}
 				editTodoDescription={editTodoDescription}
