@@ -1,9 +1,10 @@
 import { useState } from "react";
+import dayjs from "dayjs";
 
 function TodoAddForm(props) {
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
-	const [timestamp, setTimestamp] = useState("");
+	const [deadlineTime, setDeadlineTime] = useState("");
 
 	const handleInputTitle = (event) => {
 		setTitle(event.target.value);
@@ -12,17 +13,17 @@ function TodoAddForm(props) {
 		setDescription(event.target.value);
 	};
 	const handleInputDate = (event) => {
-		let timestamp = new Date(event.target.value).getTime() / 100;
-		setTimestamp(timestamp);
+		setDeadlineTime(dayjs(event.target.value).unix());
 	};
 	const addTodo = (event) => {
 		if (title) {
 			props.addTodo({
 				id: props.todos.length + 1,
+				creatingTime: dayjs().unix(),
 				title,
 				description,
 				checked: false,
-				timestamp,
+				deadlineTime,
 				imageSrc:
 					"https://www.html.am/images/samples/remarkables_queenstown_new_zealand-300x225.jpg",
 			});
@@ -40,6 +41,7 @@ function TodoAddForm(props) {
 			addTodo();
 		}
 	};
+
 	return (
 		<div className="todo-add-form">
 			<input
@@ -62,9 +64,9 @@ function TodoAddForm(props) {
 			/>
 			<input type="file" />
 			<input
+				id={props.id}
 				type="datetime-local"
-				id="todo-deadline"
-				onChange={handleInputDate}
+				onBlur={handleInputDate}
 			/>
 			<button
 				onClick={handleClick}

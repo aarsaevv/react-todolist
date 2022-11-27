@@ -2,12 +2,13 @@
   border: 2px solid #d3d3d3;
   border-radius: 12px;
 }
-
 .checked {
   text-decoration: line-through;
   opacity: 0.4;
 }
-
+.deadline-due {
+  color: red;
+}
 body {
   display: flex;
   flex-direction: column;
@@ -15,13 +16,11 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   background-color: #f4f4f4;
 }
-
 .app-header {
   text-align: center;
   font-size: 36px;
   margin: 15px 0;
 }
-
 .todo-list {
   display: flex;
   flex-direction: column;
@@ -33,7 +32,6 @@ body {
   border: 2px solid #d3d3d3;
   border-radius: 12px;
 }
-
 .todo-list .todo-add-form {
   display: flex;
   flex-direction: column;
@@ -41,16 +39,13 @@ body {
   gap: 4px;
   margin: 5px 0 5px;
 }
-
 .todo-list .todo-add-form .add-button {
   font-size: 16px;
   width: auto;
 }
-
 .todo-list .todo-add-form .add-text {
   font-size: 20px;
 }
-
 .todo-list .todo-item {
   display: flex;
   align-items: center;
@@ -62,7 +57,6 @@ body {
   border: 2px solid #d3d3d3;
   border-radius: 12px;
 }
-
 .todo-list .todo-item .task-title-with-checkbox {
   display: flex;
   flex-direction: row;
@@ -70,28 +64,23 @@ body {
   gap: 10px;
   font-size: 20px;
 }
-
 .todo-list .todo-item .task-title-with-checkbox .checkbox {
   width: 18px;
   height: 18px;
 }
-
 .todo-list .todo-item .embedded-image {
   position: relative;
   height: 100%;
 }
-
 .todo-list .todo-item .item-buttons {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 4px;
 }
-
 .todo-list .todo-item .item-buttons .remove-button {
   padding: 0 8px 0 0;
 }
-
 .todo-list .todo-item .item-buttons .edit-button .edit-text {
   padding: auto 0;
   margin: 0 4px 0 0;
