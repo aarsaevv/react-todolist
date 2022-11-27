@@ -68,25 +68,17 @@ function App() {
 		await deleteDoc(doc(db, "todos", realDocumentId));
 		loadTodosFromDatabase();
 	};
-	const editTodoTitle = (todo) => {
-		todos = todos.map((item, index) => {
-			if (item.title !== todo.title && index + 1 === todo.id) {
-				item.title = todo.title;
-				return item;
-			}
-			return item;
-		});
-		setTodos(todos);
+	const editTodoTitle = async (todo) => {
+		let realDocumentId = todo.id.slice(-20);
+		const todoRef = doc(db, "todos", realDocumentId);
+		await setDoc(todoRef, { title: todo.title }, { merge: true });
+		await loadTodosFromDatabase();
 	};
-	const editTodoDescription = (todo) => {
-		todos = todos.map((item, index) => {
-			if (item.description !== todo.description && index + 1 === todo.id) {
-				item.description = todo.description;
-				return item;
-			}
-			return item;
-		});
-		setTodos(todos);
+	const editTodoDescription = async (todo) => {
+		let realDocumentId = todo.id.slice(-20);
+		const todoRef = doc(db, "todos", realDocumentId);
+		await setDoc(todoRef, { description: todo.description }, { merge: true });
+		await loadTodosFromDatabase();
 	};
 	const toggleChecked = async (todo) => {
 		let realDocumentId = todo.id.slice(-20);
