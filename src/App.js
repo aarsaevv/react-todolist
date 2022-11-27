@@ -1,20 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./styles.css";
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import {
+	addDoc,
+	collection,
+	deleteDoc,
+	doc,
+	getDocs,
+} from "firebase/firestore";
 import Header from "./components/Header/Header.js";
 import TodoList from "./components/TodoList/TodoList.js";
 
 function App() {
 	let [todos, setTodos] = useState([]);
 
-<<<<<<< Updated upstream
-	const addTodo = (todo) => {
-		todos.push(todo);
-		setTodos(todos);
-		setTodos([...todos]);
-	};
-	const removeTodo = (todo) => {
-		setTodos(todos.filter((el) => todo.id !== el.id));
-=======
 	// Firebase Configuration
 	const firebaseConfig = {
 		apiKey: "AIzaSyB-lcuq78eO4MQv9kTu9Ys9sV6881QXeDA",
@@ -61,9 +61,8 @@ function App() {
 		loadTodosFromDatabase();
 	};
 	const removeTodo = async (todo) => {
-		// await deleteDoc(doc(db, "todos", todo.id));
-		// loadTodosFromDatabase();
->>>>>>> Stashed changes
+		await deleteDoc(doc(db, "todos"), todo.id);
+		loadTodosFromDatabase();
 	};
 	const editTodoTitle = (todo) => {
 		todos = todos.map((item, index) => {
