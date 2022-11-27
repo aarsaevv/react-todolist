@@ -30,39 +30,41 @@ function App() {
 	const db = getFirestore(app);
 
 	useEffect(() => {
+		console.log(todos);
 		loadTodosFromDatabase();
 	}, []);
 
 	const loadTodosFromDatabase = async (todo) => {
 		const querySnapshot = await getDocs(collection(db, "todos"));
-		console.log(querySnapshot.docs[0].id); // Пригодится
 		fetch(
 			"https://firestore.googleapis.com/v1/projects/react-todolist-bc761/databases/(default)/documents/todos"
 		)
 			.then((response) => response.json())
 			.then((json) => {
-				let fields = json.documents.map((document) => {
-					return {
-						checked: document.fields.checked.booleanValue,
-						creatingTime: document.fields.creatingTime.integerValue,
-						deadlineTime: document.fields.deadlineTime.integerValue,
-						description: document.fields.description.stringValue,
-						id: document.name,
-						imageSrc: document.fields.imageSrc.stringValue,
-						title: document.fields.title.stringValue,
-					};
-				});
-				setTodos(fields);
+				if (json.documents) {
+					let fields = json.documents.map((document) => {
+						return {
+							checked: document.fields.checked.booleanValue,
+							creatingTime: document.fields.creatingTime.integerValue,
+							deadlineTime: document.fields.deadlineTime.integerValue,
+							description: document.fields.description.stringValue,
+							id: document.name,
+							imageSrc: document.fields.imageSrc.stringValue,
+							title: document.fields.title.stringValue,
+						};
+					});
+					setTodos(fields);
+				} else setTodos("");
 			});
 	};
-
 	const addTodo = async (todo) => {
 		await addDoc(collection(db, "todos"), todo);
 		loadTodosFromDatabase();
 	};
 	const removeTodo = async (todo) => {
-		await deleteDoc(doc(db, "todos"), todo.id);
-		loadTodosFromDatabase();
+		let realId = todo.id.slice(-20);
+		await deleteDoc(doc(db, "todos", realId));
+		await loadTodosFromDatabase();
 	};
 	const editTodoTitle = (todo) => {
 		todos = todos.map((item, index) => {
