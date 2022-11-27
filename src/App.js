@@ -7,7 +7,9 @@ import {
 	collection,
 	deleteDoc,
 	doc,
+	getDoc,
 	getDocs,
+	setDoc,
 } from "firebase/firestore";
 import Header from "./components/Header/Header.js";
 import TodoList from "./components/TodoList/TodoList.js";
@@ -28,14 +30,12 @@ function App() {
 	const app = initializeApp(firebaseConfig);
 	// Initialize Cloud Firestore and get a reference to the service
 	const db = getFirestore(app);
-
+	// DONE
 	useEffect(() => {
-		console.log(todos);
 		loadTodosFromDatabase();
 	}, []);
-
+	// DONE
 	const loadTodosFromDatabase = async (todo) => {
-		const querySnapshot = await getDocs(collection(db, "todos"));
 		fetch(
 			"https://firestore.googleapis.com/v1/projects/react-todolist-bc761/databases/(default)/documents/todos"
 		)
@@ -57,14 +57,16 @@ function App() {
 				} else setTodos("");
 			});
 	};
+	// DONE
 	const addTodo = async (todo) => {
 		await addDoc(collection(db, "todos"), todo);
 		loadTodosFromDatabase();
 	};
+	// DONE
 	const removeTodo = async (todo) => {
-		let realId = todo.id.slice(-20);
-		await deleteDoc(doc(db, "todos", realId));
-		await loadTodosFromDatabase();
+		let realDocumentId = todo.id.slice(-20);
+		await deleteDoc(doc(db, "todos", realDocumentId));
+		loadTodosFromDatabase();
 	};
 	const editTodoTitle = (todo) => {
 		todos = todos.map((item, index) => {
@@ -86,15 +88,17 @@ function App() {
 		});
 		setTodos(todos);
 	};
-	const toggleChecked = (todo) => {
-		todos = todos.map((item, index) => {
-			if (item.checked === todo.checked && index + 1 === todo.id) {
-				item.checked = !todo.checked;
-				return item;
-			}
-			return item;
-		});
-		setTodos(todos);
+	const toggleChecked = async (todo) => {
+		let realDocumentId = todo.id.slice(-20);
+		const todoRef = doc(db, "todos", realDocumentId);
+		const todoSnap = await getDoc(todoRef);
+		let objectData = todoSnap.data();
+		if (objectData.checked === false) {
+			await setDoc(todoRef, { checked: true }, { merge: true });
+		} else {
+			await setDoc(todoRef, { checked: false }, { merge: true });
+		}
+		await loadTodosFromDatabase();
 	};
 	return (
 		<div className="App">

@@ -7,6 +7,7 @@ function TaskTitleWithCheckbox(props) {
 					props.toggleChecked(props.todo);
 				}}
 				className="checkbox"
+				defaultChecked={props.todo.checked ? "checked" : ""}
 			/>
 			<span
 				className={`${props.todo.checked ? "checked" : ""} ${
