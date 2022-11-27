@@ -3,6 +3,7 @@ function TaskDescription(props) {
 		<div className="task-description">
 			<span
 				className={`${props.todo.checked ? "checked" : ""} ${
+					props.todo.deadlineTime > 0 &&
 					props.todo.creatingTime > props.todo.deadlineTime
 						? "deadline-due"
 						: ""
