@@ -5,6 +5,7 @@ function TodoAddForm(props) {
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
 	const [deadlineTime, setDeadlineTime] = useState("");
+	let [file, setFile] = useState("");
 
 	const handleInputTitle = (event) => {
 		setTitle(event.target.value);
@@ -15,17 +16,32 @@ function TodoAddForm(props) {
 	const handleInputDate = (event) => {
 		setDeadlineTime(dayjs(event.target.value).unix());
 	};
+	const handleFileInputChange = (event) => {
+		file = event.target.files[0];
+		props
+			.getBase64(file)
+			.then((result) => {
+				file["base64"] = result;
+				setFile({
+					base64URL: result,
+					file,
+				});
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+		setFile(file);
+	};
 	const addTodo = (event) => {
 		if (title) {
 			props.addTodo({
-				id: props.todos.length + 1,
-				creatingTime: dayjs().unix(),
-				title,
-				description,
 				checked: false,
+				creatingTime: dayjs().unix(),
 				deadlineTime,
-				imageSrc:
-					"https://www.html.am/images/samples/remarkables_queenstown_new_zealand-300x225.jpg",
+				description,
+				file: file.base64URL,
+				id: props.todos.length + 1,
+				title,
 			});
 			setTitle("");
 		}
@@ -41,7 +57,6 @@ function TodoAddForm(props) {
 			addTodo();
 		}
 	};
-
 	return (
 		<div className="todo-add-form">
 			<input
@@ -62,7 +77,11 @@ function TodoAddForm(props) {
 				onKeyDown={handleKeypress}
 				placeholder="Введите описание задачи"
 			/>
-			<input type="file" />
+			<input
+				type="file"
+				name="file"
+				onChange={handleFileInputChange}
+			/>
 			<input
 				id={props.id}
 				type="datetime-local"

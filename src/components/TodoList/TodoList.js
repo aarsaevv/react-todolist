@@ -7,16 +7,18 @@ function TodoList(props) {
 			<TodoAddForm
 				addTodo={props.addTodo}
 				todos={props.todos}
+				getBase64={props.getBase64}
 			/>
 			{props.todos.length > 0 &&
 				props.todos.map((todo) => (
 					<TodoItem
-						removeTodo={props.removeTodo}
-						toggleChecked={props.toggleChecked}
-						editTodoTitle={props.editTodoTitle}
+						base64URL={props.base64URL}
 						editTodoDescription={props.editTodoDescription}
-						todo={todo}
+						editTodoTitle={props.editTodoTitle}
 						key={todo.id}
+						removeTodo={props.removeTodo}
+						todo={todo}
+						toggleChecked={props.toggleChecked}
 					/>
 				))}
 		</div>
