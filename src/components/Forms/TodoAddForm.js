@@ -7,6 +7,7 @@ function TodoAddForm(props) {
 	let [deadlineTime, setDeadlineTime] = useState("");
 	let [file, setFile] = useState("");
 
+	/** Асинхронная функция получения base64 из выбранного файла */
 	const getBase64Image = async (file) => {
 		const reader = new FileReader();
 		await new Promise((resolve, reject) => {
@@ -16,15 +17,12 @@ function TodoAddForm(props) {
 		});
 		return reader.result;
 	};
-
+	/** Добавление в стейт значений название, описание, дедлайн и файл. */
 	const handleInputTitle = (event) => {
 		setTitle(event.target.value);
 	};
 	const handleInputDescription = (event) => {
 		setDescription(event.target.value);
-	};
-	const handleInputDate = (event) => {
-		setDeadlineTime(dayjs(event.target.value).unix());
 	};
 	const handleInputFile = async (event) => {
 		let image = event.target.files[0];
@@ -36,6 +34,10 @@ function TodoAddForm(props) {
 		}
 		getBase64Image(image).then((result) => setFile(result));
 	};
+	const handleInputDate = (event) => {
+		setDeadlineTime(dayjs(event.target.value).unix());
+	};
+	/** Добавление полей в файл, который позднее будет отправлен в Firestore */
 	const addTodo = (event) => {
 		if (title) {
 			props.addTodo({
@@ -49,6 +51,7 @@ function TodoAddForm(props) {
 			});
 		}
 	};
+	/** Очищение полей после клика. Частично работает. */
 	const handleClick = (event) => {
 		addTodo();
 		setDeadlineTime(""); // Не работает
@@ -56,6 +59,7 @@ function TodoAddForm(props) {
 		setFile(""); // Не работает
 		setTitle("");
 	};
+	/** То же самое после нажатия Enter в полях */
 	const handleKeypress = (event) => {
 		if (event.keyCode === 13) {
 			addTodo();

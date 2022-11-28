@@ -16,7 +16,9 @@ import TodoList from "./components/TodoList/TodoList.js";
 function App() {
 	let [todos, setTodos] = useState([]);
 
-	// Конфигурация Firebase
+	/** Конфигурация Firebase,
+	 * 	Инициализация Cloud и получение ссылки для работы с БД */
+
 	const firebaseConfig = {
 		apiKey: "AIzaSyB-lcuq78eO4MQv9kTu9Ys9sV6881QXeDA",
 		authDomain: "react-todolist-bc761.firebaseapp.com",
@@ -25,15 +27,13 @@ function App() {
 		messagingSenderId: "701744540272",
 		appId: "1:701744540272:web:7ef97f060cb3995a2422b5",
 	};
-	// Инициализация Firebase
 	const app = initializeApp(firebaseConfig);
-	// Инициализация Cloud и получение ссылки для работы с БД
 	const db = getFirestore(app);
-	// DONE
+	/** Используется хук useEffect. React загружает тудус после того, как модифицируется DOM-дерево **/
 	useEffect(() => {
 		loadTodosFromDatabase();
 	}, []);
-	// DONE
+	/** Загрузка тудус через фетч. Правильнее будет сделать это через запрос из библиотеки */
 	const loadTodosFromDatabase = async (todo) => {
 		fetch(
 			"https://firestore.googleapis.com/v1/projects/react-todolist-bc761/databases/(default)/documents/todos"
@@ -41,6 +41,7 @@ function App() {
 			.then((response) => response.json())
 			.then((json) => {
 				if (json.documents) {
+					/** Маппинг приходящего из дб JSON и подставление его полей в поля нашего объекта */
 					let fields = json.documents.map((document) => {
 						return {
 							checked: document.fields.checked.booleanValue,
@@ -52,21 +53,23 @@ function App() {
 							file: document.fields.file.stringValue,
 						};
 					});
+					/** Сетаем готовый объект в todos */
 					setTodos(fields);
 				} else setTodos("");
 			});
 	};
-	// DONE
+	/** Добавление нового документа в коллекцию todos */
 	const addTodo = async (todo) => {
 		await addDoc(collection(db, "todos"), todo);
 		await loadTodosFromDatabase();
 	};
-	// DONE
+	/** Удаление документа по id из коллекции todos */
 	const removeTodo = async (todo) => {
 		let realDocumentId = todo.id.slice(-20);
 		await deleteDoc(doc(db, "todos", realDocumentId));
 		loadTodosFromDatabase();
 	};
+	/** Переписывание полей объекта приходящими данными - Title и Description */
 	const editTodoTitle = async (todo) => {
 		let realDocumentId = todo.id.slice(-20);
 		const todoRef = doc(db, "todos", realDocumentId);
@@ -79,6 +82,7 @@ function App() {
 		await setDoc(todoRef, { description: todo.description }, { merge: true });
 		await loadTodosFromDatabase();
 	};
+	/** Чекинг тудушки и замена на "сделано" при клике */
 	const toggleChecked = async (todo) => {
 		let realDocumentId = todo.id.slice(-20);
 		const todoRef = doc(db, "todos", realDocumentId);
