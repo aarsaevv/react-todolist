@@ -43,7 +43,6 @@ function EditButton(props) {
 						className="edit-text"
 						onChange={handleEditDescriptionInputChange}
 					/>
-					<input type="file" />
 				</div>
 			)}
 			<button

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import "./styles.css";
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import {
@@ -8,16 +7,16 @@ import {
 	deleteDoc,
 	doc,
 	getDoc,
-	getDocs,
 	setDoc,
 } from "firebase/firestore";
+import "./styles.css";
 import Header from "./components/Header/Header.js";
 import TodoList from "./components/TodoList/TodoList.js";
 
 function App() {
 	let [todos, setTodos] = useState([]);
 
-	// Firebase Configuration
+	// Конфигурация Firebase
 	const firebaseConfig = {
 		apiKey: "AIzaSyB-lcuq78eO4MQv9kTu9Ys9sV6881QXeDA",
 		authDomain: "react-todolist-bc761.firebaseapp.com",
@@ -26,9 +25,9 @@ function App() {
 		messagingSenderId: "701744540272",
 		appId: "1:701744540272:web:7ef97f060cb3995a2422b5",
 	};
-	// Initialize Firebase
+	// Инициализация Firebase
 	const app = initializeApp(firebaseConfig);
-	// Initialize Cloud Firestore and get a reference to the service
+	// Инициализация Cloud и получение ссылки для работы с БД
 	const db = getFirestore(app);
 	// DONE
 	useEffect(() => {
@@ -49,8 +48,8 @@ function App() {
 							deadlineTime: document.fields.deadlineTime.integerValue,
 							description: document.fields.description.stringValue,
 							id: document.name,
-							imageSrc: document.fields.imageSrc.stringValue,
 							title: document.fields.title.stringValue,
+							file: document.fields.file.stringValue,
 						};
 					});
 					setTodos(fields);
@@ -60,7 +59,7 @@ function App() {
 	// DONE
 	const addTodo = async (todo) => {
 		await addDoc(collection(db, "todos"), todo);
-		loadTodosFromDatabase();
+		await loadTodosFromDatabase();
 	};
 	// DONE
 	const removeTodo = async (todo) => {

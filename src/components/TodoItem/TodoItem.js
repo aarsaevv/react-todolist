@@ -1,5 +1,6 @@
 import TaskTitleWithCheckbox from "../Forms/TaskTitleWithCheckbox.js";
 import TaskDescription from "../Forms/TaskDescription.js";
+import TaskImage from "../Forms/TaskImage.js";
 import EditButton from "../Buttons/EditButton.js";
 import RemoveButton from "../Buttons/RemoveButton.js";
 
@@ -14,10 +15,9 @@ function TodoItem(props) {
 				todo={props.todo}
 				toggleChecked={props.toggleChecked}
 			/>
-			<img
-				className={`embedded-image ${props.todo.checked ? "checked" : ""}`}
-				src={props.todo.imageSrc || ""}
-				alt="Картинка"
+			<TaskImage
+				todo={props.todo}
+				toggleChecked={props.toggleChecked}
 			/>
 			<div className="item-buttons">
 				<EditButton

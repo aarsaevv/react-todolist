@@ -4,7 +4,18 @@ import dayjs from "dayjs";
 function TodoAddForm(props) {
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
-	const [deadlineTime, setDeadlineTime] = useState("");
+	let [deadlineTime, setDeadlineTime] = useState("");
+	let [file, setFile] = useState("");
+
+	const getBase64Image = async (file) => {
+		const reader = new FileReader();
+		await new Promise((resolve, reject) => {
+			reader.onload = resolve;
+			reader.onerror = reject;
+			reader.readAsDataURL(file);
+		});
+		return reader.result;
+	};
 
 	const handleInputTitle = (event) => {
 		setTitle(event.target.value);
@@ -15,6 +26,16 @@ function TodoAddForm(props) {
 	const handleInputDate = (event) => {
 		setDeadlineTime(dayjs(event.target.value).unix());
 	};
+	const handleInputFile = async (event) => {
+		let image = event.target.files[0];
+		if (image.size > 1048487) {
+			alert(
+				"Файл слишком большой! Он будет некорректно отображаться. Я работаю над улучшением клиентской части и ошибка скоро исчезнет."
+			);
+			event.current.value = "";
+		}
+		getBase64Image(image).then((result) => setFile(result));
+	};
 	const addTodo = (event) => {
 		if (title) {
 			props.addTodo({
@@ -24,21 +45,24 @@ function TodoAddForm(props) {
 				description,
 				checked: false,
 				deadlineTime,
-				imageSrc:
-					"https://www.html.am/images/samples/remarkables_queenstown_new_zealand-300x225.jpg",
+				file,
 			});
-			setTitle("");
-		}
-		if (description) {
-			setDescription("");
 		}
 	};
 	const handleClick = (event) => {
 		addTodo();
+		setDeadlineTime(""); // Не работает
+		setDescription("");
+		setFile(""); // Не работает
+		setTitle("");
 	};
 	const handleKeypress = (event) => {
 		if (event.keyCode === 13) {
 			addTodo();
+			setDeadlineTime(""); // Не работает
+			setDescription("");
+			setFile(""); // Не работает
+			setTitle("");
 		}
 	};
 
@@ -62,10 +86,13 @@ function TodoAddForm(props) {
 				onKeyDown={handleKeypress}
 				placeholder="Введите описание задачи"
 			/>
-			<input type="file" />
 			<input
-				id={props.id}
+				type="file"
+				onChange={handleInputFile}
+			/>
+			<input
 				type="datetime-local"
+				id={props.id}
 				onBlur={handleInputDate}
 			/>
 			<button

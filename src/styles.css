@@ -57,6 +57,10 @@ body {
   border: 2px solid #d3d3d3;
   border-radius: 12px;
 }
+.todo-list .todo-item .embedded-image {
+  position: relative;
+  height: 100%;
+}
 .todo-list .todo-item .task-title-with-checkbox {
   display: flex;
   flex-direction: row;
@@ -67,10 +71,6 @@ body {
 .todo-list .todo-item .task-title-with-checkbox .checkbox {
   width: 18px;
   height: 18px;
-}
-.todo-list .todo-item .embedded-image {
-  position: relative;
-  height: 100%;
 }
 .todo-list .todo-item .item-buttons {
   display: flex;

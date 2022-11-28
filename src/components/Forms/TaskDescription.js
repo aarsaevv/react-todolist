@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+import { useState } from "react";
 function TaskDescription(props) {
 	return (
 		<div className="task-description">
@@ -9,6 +11,10 @@ function TaskDescription(props) {
 						: ""
 				}`}>
 				{props.todo.description}
+				<br />
+				{props.todo.deadlineTime
+					? `До ${dayjs(props.todo.deadlineTime * 1000).format("DD/MM/YYYY")}`
+					: ""}
 			</span>
 		</div>
 	);
