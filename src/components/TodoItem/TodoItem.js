@@ -16,7 +16,7 @@ function TodoItem(props) {
 			/>
 			<img
 				className={`embedded-image ${props.todo.checked ? "checked" : ""}`}
-				src={props.base64URL || ""}
+				src={props.todo.imageSrc || ""}
 				alt="Картинка"
 			/>
 			<div className="item-buttons">
