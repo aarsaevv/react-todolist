@@ -71,16 +71,20 @@ function App() {
 	};
 	/** Переписывание полей объекта приходящими данными - Title и Description */
 	const editTodoTitle = async (todo) => {
-		let realDocumentId = todo.id.slice(-20);
-		const todoRef = doc(db, "todos", realDocumentId);
-		await setDoc(todoRef, { title: todo.title }, { merge: true });
-		await loadTodosFromDatabase();
+		if (todo.id) {
+			let realDocumentId = todo.id.slice(-20);
+			const todoRef = doc(db, "todos", realDocumentId);
+			await setDoc(todoRef, { title: todo.title }, { merge: true });
+			await loadTodosFromDatabase();
+		}
 	};
 	const editTodoDescription = async (todo) => {
-		let realDocumentId = todo.id.slice(-20);
-		const todoRef = doc(db, "todos", realDocumentId);
-		await setDoc(todoRef, { description: todo.description }, { merge: true });
-		await loadTodosFromDatabase();
+		if (todo.id) {
+			let realDocumentId = todo.id.slice(-20);
+			const todoRef = doc(db, "todos", realDocumentId);
+			await setDoc(todoRef, { description: todo.description }, { merge: true });
+			await loadTodosFromDatabase();
+		}
 	};
 	/** Чекинг тудушки и замена на "сделано" при клике */
 	const toggleChecked = async (todo) => {

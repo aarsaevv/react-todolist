@@ -21,8 +21,10 @@ function EditButton(props) {
 	};
 	const saveTodo = (event) => {
 		if (isEditing) {
-			props.editTodoDescription(todoDescription);
-			props.editTodoTitle(todoTitle);
+			if (todoTitle || todoDescription) {
+				props.editTodoDescription(todoDescription);
+				props.editTodoTitle(todoTitle);
+			}
 		}
 	};
 	return (
