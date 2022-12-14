@@ -8,6 +8,7 @@ import {
 	doc,
 	getDoc,
 	setDoc,
+	getDocs,
 } from "firebase/firestore";
 import "./styles.css";
 import Header from "./components/Header/Header.js";
@@ -33,8 +34,13 @@ function App() {
 	useEffect(() => {
 		loadTodosFromDatabase();
 	}, []);
+<<<<<<< Updated upstream
 
 	/** Загрузка тудус через фетч. Правильнее будет сделать это через запрос из библиотеки */
+=======
+<<<<<<< Updated upstream
+	// DONE
+>>>>>>> Stashed changes
 	const loadTodosFromDatabase = async (todo) => {
 		fetch(
 			"https://firestore.googleapis.com/v1/projects/react-todolist-bc761/databases/(default)/documents/todos"
@@ -57,7 +63,25 @@ function App() {
 					/** Сетаем готовый объект в todos */
 					setTodos(fields);
 				} else setTodos("");
+=======
+
+	/** Загрузка тудус через фетч. Правильнее будет сделать это через запрос из библиотеки */
+	const loadTodosFromDatabase = async () => {
+		const querySnapshot = await getDocs(collection(db, "todos"));
+		let arrayOfDocuments = [];
+		let arrayOfIDs = [];
+		if (querySnapshot) {
+			querySnapshot.forEach((doc) => {
+				arrayOfDocuments.push(doc.data());
+				arrayOfIDs.push(doc.id);
+>>>>>>> Stashed changes
 			});
+			console.log(arrayOfDocuments);
+			console.log(arrayOfIDs);
+			setTodos(arrayOfDocuments);
+		} else {
+			setTodos("");
+		}
 	};
 	/** Добавление нового документа в коллекцию todos */
 	const addTodo = async (todo) => {
@@ -66,7 +90,7 @@ function App() {
 	};
 	/** Удаление документа по id из коллекции todos */
 	const removeTodo = async (todo) => {
-		let realDocumentId = todo.id.slice(-20);
+		let realDocumentId = todo.id.slice;
 		await deleteDoc(doc(db, "todos", realDocumentId));
 		loadTodosFromDatabase();
 	};
