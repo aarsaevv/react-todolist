@@ -1,5 +1,4 @@
 import dayjs from "dayjs";
-import { useState } from "react";
 function TaskDescription(props) {
 	return (
 		<div className="task-description">

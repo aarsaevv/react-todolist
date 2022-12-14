@@ -33,6 +33,7 @@ function App() {
 	useEffect(() => {
 		loadTodosFromDatabase();
 	}, []);
+
 	/** Загрузка тудус через фетч. Правильнее будет сделать это через запрос из библиотеки */
 	const loadTodosFromDatabase = async (todo) => {
 		fetch(
