@@ -30,7 +30,6 @@ function TodoAddForm(props) {
 			alert(
 				"Файл слишком большой! Он будет некорректно отображаться. Я работаю над улучшением клиентской части и ошибка скоро исчезнет."
 			);
-			event.current.value = "";
 		}
 		getBase64Image(image).then((result) => setFile(result));
 	};
@@ -49,7 +48,7 @@ function TodoAddForm(props) {
 				deadlineTime,
 				file,
 			});
-		}
+		} else alert("Название задачи не может быть пустым!");
 	};
 	/** Очищение полей после клика. Частично работает. */
 	const handleClick = (event) => {
