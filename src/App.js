@@ -35,20 +35,26 @@ function App() {
 		loadTodosFromDatabase();
 	}, []);
 
+	let retrievedArrayOfDocs = [];
+	let retrievedArrayOfIDs = [];
+
 	const loadTodosFromDatabase = async () => {
 		const querySnapshot = await getDocs(collection(db, "todos"));
-		let arrayOfDocuments = [];
-		let arrayOfIDs = [];
 		if (querySnapshot) {
 			querySnapshot.forEach((doc) => {
-				arrayOfIDs.push(doc.id);
-				arrayOfDocuments.push(doc.data());
+				retrievedArrayOfIDs.push(doc.id);
+				retrievedArrayOfDocs.push(doc.data());
 			});
-			arrayOfDocuments.map((document, index) => {
-				document.id = arrayOfIDs[index];
+			retrievedArrayOfDocs.map((document, index) => {
+				document.id = retrievedArrayOfIDs[index];
 				return document.id;
 			});
-			setTodos(arrayOfDocuments);
+
+			/** Полученные тудус сортируются в порядке создания **/
+			retrievedArrayOfDocs.sort(
+				(prev, next) => next.creatingTime - prev.creatingTime
+			);
+			setTodos(retrievedArrayOfDocs);
 		} else {
 			setTodos("");
 		}
