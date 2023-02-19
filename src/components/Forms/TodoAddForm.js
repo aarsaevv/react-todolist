@@ -28,7 +28,7 @@ function TodoAddForm(props) {
 		let image = event.target.files[0];
 		if (image.size > 1048487) {
 			alert(
-				"Файл слишком большой! Он будет некорректно отображаться. Я работаю над улучшением клиентской части и ошибка скоро исчезнет."
+				"Файл слишком большой! Он будет некорректно отображаться. Я работаю над улучшением клиентской части и ошибка скоро исчезнет.",
 			);
 		}
 		getBase64Image(image).then((result) => setFile(result));
@@ -89,18 +89,14 @@ function TodoAddForm(props) {
 				onKeyDown={handleKeypress}
 				placeholder="Введите описание задачи"
 			/>
-			<input
-				type="file"
-				onChange={handleInputFile}
-			/>
+			<input type="file" onChange={handleInputFile} className="add-file" />
 			<input
 				type="datetime-local"
 				id={props.id}
 				onBlur={handleInputDate}
+				className="add-date"
 			/>
-			<button
-				onClick={handleClick}
-				className="add-button">
+			<button onClick={handleClick} className="add-button">
 				Добавить задачу
 			</button>
 		</div>

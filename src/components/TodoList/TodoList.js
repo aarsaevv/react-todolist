@@ -4,10 +4,14 @@ import TodoAddForm from "../Forms/TodoAddForm.js";
 function TodoList(props) {
 	return (
 		<div className="todo-list">
-			<TodoAddForm
-				addTodo={props.addTodo}
-				todos={props.todos}
-			/>
+			<TodoAddForm addTodo={props.addTodo} todos={props.todos} />
+			{props.todos.length == 0 && (
+				<h3>
+					Задач нет.
+					<br />
+					Добавьте задачи.
+				</h3>
+			)}
 			{props.todos.length > 0 &&
 				props.todos.map((todo) => (
 					<TodoItem

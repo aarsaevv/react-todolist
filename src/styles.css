@@ -10,11 +10,10 @@ body {
   flex-direction: column;
   align-items: center;
   font-family: Arial, Helvetica, sans-serif;
-  background: #284b63;
-  background: linear-gradient(90deg, #284b63 0%, #3c6e71 100%);
+  background: #1e1e1e;
 }
 .app-header {
-  margin: 30px 0;
+  margin: 25px 0 45px 0;
   font-size: 48px;
   font-family: Consolas, monospace;
   font-weight: 700;
@@ -25,10 +24,10 @@ body {
 }
 @keyframes glow {
   100% {
-    text-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 42px #fff, 0 0 82px #fff, 0 0 92px #3c6e71, 0 0 102px #3c6e71;
+    text-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 42px #fff;
   }
   0% {
-    text-shadow: 0 0 7px #eee, 0 0 10px #eee, 0 0 21px #eee, 0 0 42px #3c6e71, 0 0 82px #3c6e71, 0 0 97px #3c6e71;
+    text-shadow: 0 0 7px #eee, 0 0 10px #eee, 0 0 21px #eee, 0 0 42px #1e1e1e;
   }
 }
 .todo-list {
@@ -36,10 +35,11 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  width: 900px;
+  width: 860px;
   text-align: center;
-  background-color: rgba(255, 255, 255, 0.1);
-  box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  color: #f0f0f0;
+  box-shadow: 0px 5px 10px 2px rgba(255, 255, 255, 0.1);
   border-radius: 6px;
   padding: 20px 10px;
 }
@@ -50,19 +50,26 @@ body {
   gap: 5px;
   margin: 5px 0 20px 0;
 }
+.todo-list .todo-add-form .add-text {
+  font-size: 20px;
+  background: #1e1e1e;
+  color: #f0f0f0;
+  border: none;
+  padding: 5px 5px;
+  border-radius: 2px;
+}
+.todo-list .todo-add-form .add-date {
+  background: #1e1e1e;
+  border: none;
+  color: #777777;
+}
 .todo-list .todo-add-form .add-button {
   font-size: 20px;
   width: 100%;
   padding: 5px 0;
-  background-color: #fff;
+  background: #1e1e1e;
+  color: #777777;
   border: none;
-  border-radius: 4px;
-}
-.todo-list .todo-add-form .add-text {
-  font-size: 20px;
-  background-color: #fff;
-  border: none;
-  padding: 5px 5px;
   border-radius: 2px;
 }
 .todo-list .todo-item {
@@ -73,8 +80,9 @@ body {
   height: 90px;
   margin: 10px 0 10px;
   padding: 0 0 0 8px;
-  background: linear-gradient(90deg, rgba(135, 189, 192, 0.2) 0%, rgba(125, 171, 202, 0.4) 100%);
-  box-shadow: 10px 10px 10px -10px rgba(34, 60, 80, 0.8);
+  color: #f0f0f0;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0px 2.5px 5px 1px rgba(255, 255, 255, 0.1);
   opacity: 0.9;
   border-radius: 4px;
 }
@@ -101,6 +109,10 @@ body {
 }
 .todo-list .todo-item .item-buttons .remove-button {
   padding: 0 8px 0 0;
+  border: none;
+}
+.todo-list .todo-item .item-buttons .edit-button {
+  border: none;
 }
 .todo-list .todo-item .item-buttons .edit-button .edit-text {
   padding: auto 0;
