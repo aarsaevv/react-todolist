@@ -1,25 +1,32 @@
 import { useState } from "react";
+import { IeditTodoDescription, IeditTodoTitle, TodoItemProps } from "../../types/types";
 
-function EditButton(props) {
+function EditButton(props: {
+	todo: TodoItemProps;
+	editTodoTitle: IeditTodoTitle;
+	editTodoDescription: IeditTodoDescription;
+}) {
 	const [isEditing, setIsEditing] = useState(false);
-	const [todoTitle, setTodoTitle] = useState({});
-	const [todoDescription, setTodoDescription] = useState({});
+	const [todoTitle, setTodoTitle] = useState<any>();
+	const [todoDescription, setTodoDescription] = useState<any>();
 
-	const handleEditTitleInputChange = (event) => {
+	const handleEditTitleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const target = event.target as HTMLInputElement;
 		setTodoTitle({
 			...todoTitle,
-			title: event.target.value,
+			title: target.value,
 			id: props.todo.id,
 		});
 	};
-	const handleEditDescriptionInputChange = (event) => {
+	const handleEditDescriptionInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const target = event.target as HTMLInputElement;
 		setTodoDescription({
 			...todoDescription,
-			description: event.target.value,
+			description: target.value,
 			id: props.todo.id,
 		});
 	};
-	const saveTodo = (event) => {
+	const saveTodo = (event: React.MouseEvent<HTMLButtonElement>) => {
 		if (isEditing) {
 			if (todoTitle || todoDescription) {
 				props.editTodoDescription(todoDescription);
@@ -33,14 +40,12 @@ function EditButton(props) {
 				<div>
 					<input
 						type="text"
-						value={todoTitle.value}
 						defaultValue={props.todo.title}
 						className="edit-text"
 						onChange={handleEditTitleInputChange}
 					/>
 					<input
 						type="text"
-						value={todoDescription.value}
 						defaultValue={props.todo.description}
 						className="edit-text"
 						onChange={handleEditDescriptionInputChange}
@@ -48,9 +53,9 @@ function EditButton(props) {
 				</div>
 			)}
 			<button
-				onClick={() => {
+				onClick={(event) => {
 					setIsEditing(!isEditing);
-					saveTodo();
+					saveTodo(event);
 				}}>
 				{!isEditing ? "Edit" : "Save"}
 			</button>

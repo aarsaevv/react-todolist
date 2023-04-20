@@ -1,4 +1,6 @@
-function TaskTitleWithCheckbox(props) {
+import { ItoggleChecked, TodoItemProps } from "../../types/types";
+
+function TaskTitleWithCheckbox(props: { todo: TodoItemProps; toggleChecked: ItoggleChecked }) {
 	return (
 		<div className="task-title-with-checkbox">
 			<input
@@ -7,12 +9,11 @@ function TaskTitleWithCheckbox(props) {
 					props.toggleChecked(props.todo);
 				}}
 				className="checkbox"
-				defaultChecked={props.todo.checked ? "checked" : ""}
+				defaultChecked={props.todo.checked ? true : false}
 			/>
 			<span
 				className={`${props.todo.checked ? "checked" : ""} ${
-					props.todo.deadlineTime > 0 &&
-					props.todo.creatingTime > props.todo.deadlineTime
+					Number(props.todo.deadlineTime) > 0 && Number(props.todo.creatingTime) > Number(props.todo.deadlineTime)
 						? "deadline-due"
 						: ""
 				}`}>

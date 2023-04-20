@@ -1,4 +1,6 @@
-const TaskImage = (props) => {
+import { TodoItemProps } from "../../types/types";
+
+const TaskImage = (props: { todo: TodoItemProps }) => {
 	return (
 		<img
 			className={`embedded-image ${props.todo.checked ? "checked" : ""}`}

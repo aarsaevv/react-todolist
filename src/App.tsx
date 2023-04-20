@@ -1,21 +1,21 @@
 import { useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { SnapshotOptions, getFirestore } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, setDoc, getDocs } from "firebase/firestore";
+import "./styles.scss";
+import Header from "./components/Header/Header";
+import TodoList from "./components/TodoList/TodoList";
 import {
-	addDoc,
-	collection,
-	deleteDoc,
-	doc,
-	getDoc,
-	setDoc,
-	getDocs,
-} from "firebase/firestore";
-import "./styles.css";
-import Header from "./components/Header/Header.js";
-import TodoList from "./components/TodoList/TodoList.js";
+	IaddTodo,
+	IeditTodoDescription,
+	IeditTodoTitle,
+	IremoveTodo,
+	ItoggleChecked,
+	TodoItemProps,
+} from "./types/types";
 
 function App() {
-	let [todos, setTodos] = useState([]);
+	let [todos, setTodos] = useState<TodoItemProps[]>([]);
 
 	/** Конфигурация Firebase,
 	 * 	Инициализация Cloud и получение ссылки для работы с БД */
@@ -35,13 +35,13 @@ function App() {
 		loadTodosFromDatabase();
 	}, []);
 
-	let retrievedArrayOfDocs = [];
-	let retrievedArrayOfIDs = [];
+	let retrievedArrayOfDocs: any[] = [];
+	let retrievedArrayOfIDs: string[] = [];
 
 	const loadTodosFromDatabase = async () => {
 		const querySnapshot = await getDocs(collection(db, "todos"));
 		if (querySnapshot) {
-			querySnapshot.forEach((doc) => {
+			querySnapshot.forEach((doc: { id: string; data(): SnapshotOptions }) => {
 				retrievedArrayOfIDs.push(doc.id);
 				retrievedArrayOfDocs.push(doc.data());
 			});
@@ -51,36 +51,34 @@ function App() {
 			});
 
 			/** Полученные тудус сортируются в порядке создания **/
-			retrievedArrayOfDocs.sort(
-				(prev, next) => next.creatingTime - prev.creatingTime
-			);
+			retrievedArrayOfDocs.sort((prev, next) => next.creatingTime - prev.creatingTime);
 			setTodos(retrievedArrayOfDocs);
 		} else {
-			setTodos("");
+			setTodos([]);
 		}
 	};
 
 	/** Добавление нового документа в коллекцию todos */
-	const addTodo = async (todo) => {
+	const addTodo: IaddTodo = async (todo: TodoItemProps) => {
 		await addDoc(collection(db, "todos"), todo);
-		await loadTodosFromDatabase();
+		loadTodosFromDatabase();
 	};
 
 	/** Удаление документа по id из коллекции todos */
-	const removeTodo = async (todo) => {
+	const removeTodo: IremoveTodo = async (todo: TodoItemProps) => {
 		await deleteDoc(doc(db, "todos", todo.id));
 		loadTodosFromDatabase();
 	};
 
 	/** Переписывание полей объекта приходящими данными - Title и Description */
-	const editTodoTitle = async (todo) => {
+	const editTodoTitle: IeditTodoTitle = async (todo: TodoItemProps) => {
 		if (todo.id) {
 			const todoRef = doc(db, "todos", todo.id);
 			await setDoc(todoRef, { title: todo.title }, { merge: true });
-			await loadTodosFromDatabase();
+			loadTodosFromDatabase();
 		}
 	};
-	const editTodoDescription = async (todo) => {
+	const editTodoDescription: IeditTodoDescription = async (todo: TodoItemProps) => {
 		if (todo.id) {
 			const todoRef = doc(db, "todos", todo.id);
 			await setDoc(todoRef, { description: todo.description }, { merge: true });
@@ -89,11 +87,11 @@ function App() {
 	};
 
 	/** Чекинг тудушки и замена на "сделано" при клике */
-	const toggleChecked = async (todo) => {
+	const toggleChecked: ItoggleChecked = async (todo: TodoItemProps) => {
 		const todoRef = doc(db, "todos", todo.id);
 		const todoSnap = await getDoc(todoRef);
 		let objectData = todoSnap.data();
-		if (objectData.checked === false) {
+		if (objectData && objectData.checked === false) {
 			await setDoc(todoRef, { checked: true }, { merge: true });
 		} else {
 			await setDoc(todoRef, { checked: false }, { merge: true });
